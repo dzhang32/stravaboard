@@ -29,3 +29,4 @@ repos:
         args:
         - --convention=numpy
         - --add-ignore=D100,D101,D104
+        - --match='((?!test_).)*\.py'
