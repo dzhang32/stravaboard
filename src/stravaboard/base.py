@@ -20,7 +20,7 @@ class StravaBase:
 
         self.refresh_access_token(payload)
 
-    def refresh_access_token(self, payload: dict):
+    def refresh_access_token(self, payload: dict) -> None:
         """Refresh the access token.
 
         This reobtains the access token, which is helpful if it's expired.
