@@ -3,7 +3,6 @@ from datetime import datetime
 
 import pytest
 from dotenv import load_dotenv
-from tomlkit import datetime
 
 from stravaboard.base import StravaBase
 from stravaboard.exceptions import StravaRequestError
