@@ -15,9 +15,9 @@ def load_env():
 
 def test_StravaBase_retrieves_access_token_correctly(capfd):
     sb = StravaBase(
-        client_id=os.environ.get("STRAVA_CLIENT_ID"),
-        client_secret=os.environ.get("STRAVA_CLIENT_SECRET"),
-        refresh_token=os.environ.get("STRAVA_REFRESH_TOKEN"),
+        client_id=os.environ.get("STRAVA_CLIENT_ID_DZ"),
+        client_secret=os.environ.get("STRAVA_CLIENT_SECRET_DZ"),
+        refresh_token=os.environ.get("STRAVA_REFRESH_TOKEN_DZ"),
     )
 
     assert len(sb.access_token) == 40
@@ -43,7 +43,7 @@ def test_StravaBase_retrieves_access_token_correctly(capfd):
 def test_StravaBase_errors_on_bad_credentials():
     with pytest.raises(StravaRequestError, match="Strava credentials"):
         StravaBase(
-            client_id=os.environ.get("STRAVA_CLIENT_ID"),
+            client_id=os.environ.get("STRAVA_CLIENT_ID_DZ"),
             client_secret="not_a_client_secret",
-            refresh_token=os.environ.get("STRAVA_REFRESH_TOKEN"),
+            refresh_token=os.environ.get("STRAVA_REFRESH_TOKEN_DZ"),
         )
