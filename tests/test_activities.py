@@ -12,13 +12,14 @@ def load_env():
     load_dotenv()
 
 
-def test_Activities_retrieves_access_token_correctly():
+def test_Activities_retrieves_activities_correctly():
     act = Activities(
         client_id=os.environ.get("STRAVA_CLIENT_ID"),
         client_secret=os.environ.get("STRAVA_CLIENT_SECRET"),
         refresh_token=os.environ.get("STRAVA_REFRESH_TOKEN"),
     )
 
-    act.get_activities()
+    act.request_activities()
 
     assert isinstance(act.activities, pd.DataFrame)
+    assert act.activities.shape[0] >= 1
