@@ -26,9 +26,41 @@ class Activities(StravaBase):
         activities = requests.get(
             self.ACTIVITIES_URL, headers=header, params=param
         ).json()
-        activities = pd.io.json.json_normalize(activities)
+        activities = pd.json_normalize(activities)
 
         self.activities = activities
+
+    def tidy_activites(self) -> None:
+        """Tidy the activity data."""
+
+        # filter for activites no longer than 24 hours
+        # to remove cel's accidental outlier logs
+        activities = self.activities.loc[
+            (self.activities["sport_type"] == "Run")
+            & (self.activities["elapsed_time"] <= (24 * 60 * 60)),
+        ].copy()
+
+        activities["elapsed_min"] = round(activities["elapsed_time"] / 60, 2)
+        activities["distance_km"] = round(activities["distance"] / 1000, 2)
+        activities["speed_mins_per_km"] = round(
+            (activities["elapsed_min"] / activities["distance_km"]), 2
+        )
+        activities["date"] = activities["start_date_local"].str.replace(
+            "T.*", "", regex=True
+        )
+        activities["date"] = pd.to_datetime(
+            activities["date"], infer_datetime_format=True
+        )
+
+        self.activities = activities[
+            [
+                "date",
+                "elapsed_min",
+                "distance_km",
+                "speed_mins_per_km",
+                "total_elevation_gain",
+            ]
+        ]
 
     @property
     def activities(self) -> pd.DataFrame:
