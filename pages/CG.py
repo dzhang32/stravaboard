@@ -12,7 +12,7 @@ load_dotenv()
 
 ##### Main #####
 
-st.set_page_config(page_title="David")
+st.set_page_config(page_title="Stravaboard")
 
 # load and tidy activity data
 now = datetime.now().strftime("%d/%m/%Y-%H")
