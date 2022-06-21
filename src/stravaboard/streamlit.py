@@ -12,6 +12,26 @@ from stravaboard.activities import Activities
 def load_activities(
     client_id: str, client_secret: str, refresh_token: str, datetime_now: str
 ) -> pd.DataFrame:
+    """Load activity data using the Strava API.
+
+    Parameters
+    ----------
+    client_id : str
+        Strava client ID.
+    client_secret : str
+        Strava client secret.
+    refresh_token : str
+        Strava client refresh token.
+    datetime_now : str
+        The current time in the format "%d/%m/%Y-%H". Combined with st.cache, this
+        should monitor the state of the function, such that re-requests will only occur
+        if an hour has passed since the last request.
+
+    Returns
+    -------
+    pd.DataFrame
+        contains the Strava activity data.
+    """
     act = Activities(
         client_id=client_id,
         client_secret=client_secret,
@@ -24,15 +44,22 @@ def load_activities(
     return act.activities
 
 
-def display_summary(act):
+def display_summary(activities: pd.DataFrame) -> None:
+    """Display a summary of the Strava activity data via Streamlit.
+
+    Parameters
+    ----------
+    activities : pd.DataFrame
+        Strava activity data obtained through load_activities().
+    """
 
     st.header("The summary")
 
     st.write(
         "You've run a total of ",
-        str(round(act["distance_km"].sum(), 2)),
+        str(round(activities["distance_km"].sum(), 2)),
         "km over ",
-        str(round(act["elapsed_min"].sum() / 60, 2)),
+        str(round(activities["elapsed_min"].sum() / 60, 2)),
         " sweaty hours 🥳",
     )
 
@@ -48,14 +75,21 @@ def display_summary(act):
         date_delta = relativedelta(years=1)
 
     latest_date = datetime.now()
-    total_across_df = act.loc[act["date"] > (latest_date - date_delta)]
+    total_across_df = activities.loc[activities["date"] > (latest_date - date_delta)]
     total_km = total_across_df["distance_km"].sum()
     total_hours = round(total_across_df["distance_km"].sum() / 60, 2)
 
     st.write(str(total_km), "km and ", str(total_hours), " hours 💪")
 
 
-def display_breakdown(activities: pd.DataFrame):
+def display_breakdown(activities: pd.DataFrame) -> None:
+    """Display a breakdown as a scatterplot on Streamlit.
+
+    Parameters
+    ----------
+    activities : pd.DataFrame
+        Strava activity data obtained through load_activities().
+    """
 
     st.header("The breakdown")
 
