@@ -10,7 +10,7 @@ class Activities(StravaBase):
 
     # TODO - add a way to check when the activity data was last last_updated
     # similar to StravaBase. However, this is currently handed via StreamLit/@st.cache
-    def request_activities(self, n: str = 100) -> None:
+    def request_activities(self, n: str = 200) -> None:
         """Obtain DataFrame of Strava activity data
 
         Queries the Strava API then stores the obtained activity data as a DataFrame
@@ -30,7 +30,7 @@ class Activities(StravaBase):
 
         self.activities = activities
 
-    def tidy_activites(self) -> None:
+    def tidy_activities(self) -> None:
         """Tidy the activity data."""
 
         # filter for activites no longer than 24 hours

@@ -24,7 +24,7 @@ def test_Activities_retrieves_activities_correctly():
     assert isinstance(act.activities, pd.DataFrame)
     assert act.activities.shape[0] >= 1
 
-    act.tidy_activites()
+    act.tidy_activities()
 
     assert act.activities.columns.to_list() == [
         "date",
