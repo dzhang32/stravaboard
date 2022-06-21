@@ -86,7 +86,7 @@ six==1.16.0
 smmap==5.0.0
 soupsieve==2.3.2.post1
 stack-data==0.3.0
--e git+ssh://git@github.com/dzhang32/stravaboard.git@417a0ec6aa886fa88767dee09a2836091e6eeb3c#egg=stravaboard
+-e .
 streamlit==1.10.0
 tenacity==8.0.1
 terminado==0.15.0
