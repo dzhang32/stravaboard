@@ -82,7 +82,14 @@ def display_summary(activities: pd.DataFrame) -> None:
     st.write(str(total_km), "km and ", str(total_hours), " hours 💪")
 
 
-def display_breakdown(activities: pd.DataFrame) -> None:
+def display_breakdown(
+    activities: pd.DataFrame,
+    title: str,
+    x: str = "date",
+    y: str = "distance_km",
+    color: str = "speed_mins_per_km",
+    color_continuous_scale: list = ["white", "yellow", "red"],
+) -> None:
     """Display a breakdown as a scatterplot on Streamlit.
 
     Parameters
@@ -91,14 +98,12 @@ def display_breakdown(activities: pd.DataFrame) -> None:
         Strava activity data obtained through load_activities().
     """
 
-    st.header("The breakdown")
-
     fig = px.scatter(
         activities,
-        x="date",
-        y="distance_km",
-        color="speed_mins_per_km",
-        color_continuous_scale=["white", "yellow", "red"],
+        x=x,
+        y=y,
+        color=color,
+        color_continuous_scale=color_continuous_scale,
         trendline="rolling",
         trendline_options=dict(window=10),
         labels={
@@ -117,18 +122,9 @@ def display_breakdown(activities: pd.DataFrame) -> None:
         ],
         width=800,
         height=600,
-        title="Date (x) vs distance (y), coloured by speed (white = fastest)",
+        title=title,
     )
 
     fig.update_traces(marker={"size": 10})
-    fig.add_hline(
-        y=1.25,
-        line_dash="dot",
-        line_color="green",
-        annotation_text="Short, pace runs ",
-        annotation_position="bottom right",
-        annotation_font_color="green",
-        annotation_font_size=15,
-    )
 
     st.plotly_chart(fig, use_container_width=False)
