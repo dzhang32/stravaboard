@@ -28,4 +28,16 @@ st.title("David's Stravaboard 🏃‍♂️🏃‍♀️")
 
 display_summary(dz_act)
 
-display_breakdown(dz_act)
+st.header("The breakdown")
+
+display_breakdown(
+    dz_act, title="Date (x) vs distance (y), coloured by speed (white = fastest)"
+)
+
+display_breakdown(
+    dz_act,
+    title="Date (x) vs speed (y), coloured by distance (blue = shortest)",
+    y="speed_mins_per_km",
+    color="distance_km",
+    color_continuous_scale=["blue", "purple", "violet"],
+)
