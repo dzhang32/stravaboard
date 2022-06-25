@@ -34,6 +34,7 @@ display_breakdown(
     dz_act, title="Date (x) vs distance (y), coloured by speed (white = fastest)"
 )
 
+# trigger streamlit refresh
 display_breakdown(
     dz_act,
     title="Date (x) vs speed (y), coloured by distance (blue = shortest)",
