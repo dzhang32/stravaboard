@@ -198,6 +198,6 @@ def display_breakdown(
         title=title,
     )
 
-    fig.update_traces(marker={"size": 10})
+    fig.update_traces(marker={"size": 10, "line": dict(width=1, color="white")})
 
     st.plotly_chart(fig, use_container_width=False)
