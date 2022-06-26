@@ -8,6 +8,69 @@ import streamlit as st
 from stravaboard.activities import Activities
 
 
+def stravaboard(
+    name: str,
+    client_id: str,
+    client_secret: str,
+    refresh_token: str,
+    datetime_now: str,
+    y: str = "distance_km",
+    color: str = "speed_mins_per_km",
+    color_continuous_scale: list = ["white", "yellow", "red"],
+):
+    """Create a StreamLit page displaying Strava data
+
+    Parameters
+    ----------
+    name : str
+        The name of the owner of the Strava data.
+    client_id : str
+        Strava client ID.
+    client_secret : str
+        Strava client secret.
+    refresh_token : str
+        Strava client refresh token.
+    datetime_now : str
+        The current time in the format "%d/%m/%Y-%H". Combined with st.cache, this
+        should monitor the state of the function, such that re-requests will only occur
+        if an hour has passed since the last request.
+    y : str, optional
+        name of the variable to be plotted on the y-axis, by default "distance_km"
+    color : str, optional
+        name of the variable to be plotted used for colour, by default
+        "speed_mins_per_km"
+    color_continuous_scale : list, optional
+        colours to be used for the continous scale, by default
+        ["white", "yellow", "red"]
+    """
+    act = load_activities(
+        datetime_now=datetime_now,
+        client_id=client_id,
+        client_secret=client_secret,
+        refresh_token=refresh_token,
+    )
+
+    st.title((name + "'s Stravaboard 🏃‍♂️🏃‍♀️"))
+
+    st.header("The summary")
+
+    display_summary(act)
+
+    st.header("The breakdown")
+
+    display_breakdown(
+        act, title="Date (x) vs distance (y), coloured by speed (white = fastest)"
+    )
+
+    display_breakdown(
+        act,
+        title="Date (x) vs speed (y), coloured by distance (blue = shortest)",
+        y=y,
+        color=color,
+        color_continuous_scale=color_continuous_scale,
+    )
+
+
 @st.cache
 def load_activities(
     client_id: str, client_secret: str, refresh_token: str, datetime_now: str
@@ -53,8 +116,6 @@ def display_summary(activities: pd.DataFrame) -> None:
         Strava activity data obtained through load_activities().
     """
 
-    st.header("The summary")
-
     st.write(
         "You've run a total of ",
         str(round(activities["distance_km"].sum(), 2)),
@@ -95,7 +156,19 @@ def display_breakdown(
     Parameters
     ----------
     activities : pd.DataFrame
-        Strava activity data obtained through load_activities().
+        Strava activity data obtained through load_activities()
+    title : str
+        The title of the plot
+    x : str, optional
+        name of the variable to be plotted on the x-axis, by default "date"
+    y : str, optional
+        name of the variable to be plotted on the y-axis, by default "distance_km"
+    color : str, optional
+        name of the variable to be plotted used for colour, by default
+        "speed_mins_per_km"
+    color_continuous_scale : list, optional
+        colours to be used for the continous scale, by default
+        ["white", "yellow", "red"]
     """
 
     fig = px.scatter(
@@ -109,7 +182,7 @@ def display_breakdown(
         labels={
             "date": "Date of run",
             "distance_km": "Distance (km)",
-            "speed_mins_per_km": "Split speed (mins per km)",
+            "speed_mins_per_km": "Pace (min/km)",
             "elapsed_min": "Elapsed time (mins)",
             "total_elevation_gain": "Total elevation gain (m)",
         },
