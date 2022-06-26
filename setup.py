@@ -2,7 +2,7 @@ import setuptools
 
 setuptools.setup(
     name="stravaboard",
-    version="0.2.0",
+    version="0.3.0",
     author="David Zhang",
     author_email="dyzhang32@gmail.com",
     description="A simple dashboard for displaying and analysing Strava data",
