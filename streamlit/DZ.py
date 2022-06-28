@@ -15,9 +15,6 @@ load_dotenv()
 ##### Main #####
 
 # load and tidy activity data
-# arbitrary code to trigger streamlit reload
-x = 1
-
 now = datetime.now().strftime("%d/%m/%Y-%H")
 
 stravaboard(
