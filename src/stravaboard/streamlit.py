@@ -70,6 +70,10 @@ def stravaboard(
         color_continuous_scale=color_continuous_scale,
     )
 
+    st.header("The mileage")
+
+    display_mileage(act)
+
 
 @st.cache
 def load_activities(
@@ -199,5 +203,39 @@ def display_breakdown(
     )
 
     fig.update_traces(marker={"size": 10, "line": dict(width=1, color="white")})
+
+    st.plotly_chart(fig, use_container_width=False)
+
+
+def display_mileage(activities: pd.DataFrame) -> None:
+    """Display mileage as a barplot on Streamlit.
+
+    Parameters
+    ----------
+    activities : pd.DataFrame
+        Strava activity data obtained through load_activities()
+    """
+    dis_by_month = (
+        activities.groupby(pd.Grouper(key="date", freq="M"))
+        .agg({"distance_km": sum})
+        .reset_index()
+    )
+
+    dis_by_month["month"] = dis_by_month["date"].dt.strftime("%Y-%m")
+
+    fig = px.bar(
+        dis_by_month,
+        x="month",
+        y="distance_km",
+        labels={
+            "month": "Month",
+            "distance_km": "Total distance (km)",
+        },
+        width=800,
+        height=600,
+        title="Total mileage across each month",
+    )
+
+    fig.update_xaxes(tickangle=-45, showticklabels=True, type="category")
 
     st.plotly_chart(fig, use_container_width=False)
