@@ -1,2 +1,6 @@
-class StravaRequestError(Exception):
+class BaseStravaboardError(Exception):
+    pass
+
+
+class AccessTokenRequestError(BaseStravaboardError):
     pass
