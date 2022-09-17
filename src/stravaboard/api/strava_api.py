@@ -12,25 +12,29 @@ class StravaAPI:
         client_id: str,
         client_secret: str,
         refresh_token: str,
-        data_manager: DataManager,
     ):
-
         self.access_token_manager = AccessTokenManager(
             client_id, client_secret, refresh_token
         )
-        self.data_manager = data_manager
 
-    def get(self) -> pd.DataFrame:
+    def get(self, data_manager: DataManager) -> pd.DataFrame:
         """Download and tidy Strava data.
 
-        Uses the DataManager to download and tidy the Strava data of interest.
+        Uses a DataManager class object to download and tidy the Strava data of
+        interest.
+
+        Parameters
+        ----------
+        data_manager : DataManager
+            an object that manages the querying and tidying of a specific type
+            of Strava data.
 
         Returns
         -------
         pd.DataFrame
-            _description_
+            contains tidy Strava data.
         """
-        self.data_manager.get_data(self.access_token_manager.access_token)
-        self.data_manager.tidy_data()
+        data_manager.get_data(self.access_token_manager.access_token)
+        data_manager.tidy_data()
 
-        return self.data_manager.data
+        return data_manager.data
