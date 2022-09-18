@@ -14,7 +14,7 @@ class DataManager(ABC):
         pass
 
 
-class Activities(DataManager):
+class ActivitiesManager(DataManager):
     """Responsible for requesting and storing activities data."""
 
     ACTIVITIES_URL = "https://www.strava.com/api/v3/athlete/activities"

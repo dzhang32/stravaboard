@@ -4,3 +4,7 @@ class BaseStravaboardError(Exception):
 
 class AccessTokenRequestError(BaseStravaboardError):
     pass
+
+
+class InvalidDataTypeError(BaseStravaboardError):
+    pass

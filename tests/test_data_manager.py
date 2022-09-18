@@ -5,7 +5,7 @@ import pytest
 from dotenv import load_dotenv
 
 from stravaboard.api.access_token import AccessTokenManager
-from stravaboard.api.data_manager import Activities
+from stravaboard.api.data_manager import ActivitiesManager
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -26,7 +26,7 @@ def access_token():
 
 def test_ActivitiesManager_retrieves_activities_correctly(access_token):
 
-    am = Activities()
+    am = ActivitiesManager()
 
     assert am.ACTIVITIES_URL == "https://www.strava.com/api/v3/athlete/activities"
 

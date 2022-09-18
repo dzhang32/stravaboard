@@ -4,8 +4,8 @@ import pandas as pd
 import pytest
 from dotenv import load_dotenv
 
-from stravaboard.api.data_manager import Activities
 from stravaboard.api.strava_api import StravaAPI
+from stravaboard.exceptions import InvalidDataTypeError
 
 
 @pytest.fixture(scope="session", autouse=True)
@@ -21,7 +21,10 @@ def test_StravaAPI_retrieves_activities_correctly():
         refresh_token=os.environ.get("STRAVA_REFRESH_TOKEN_DZ"),
     )
 
-    activities_df = strava_api.get(Activities())
+    with pytest.raises(InvalidDataTypeError, match="data_type must be one of:"):
+        strava_api.get("invalid_data_type")
+
+    activities_df = strava_api.get("activities")
 
     assert isinstance(activities_df, pd.DataFrame)
     assert activities_df.shape[0] > 1
