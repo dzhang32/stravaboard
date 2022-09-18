@@ -61,4 +61,15 @@ class ActivitiesManager(DataManager):
             activities["date"], infer_datetime_format=True
         )
 
+        activities = activities.loc[
+            :,
+            [
+                "date",
+                "elapsed_min",
+                "distance_km",
+                "speed_mins_per_km",
+                "total_elevation_gain",
+            ],
+        ]
+
         self.data = activities
