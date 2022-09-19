@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from datetime import datetime
 
+import pandas as pd
 import plotly.express as px
 import streamlit as st
 from dateutil.relativedelta import relativedelta
@@ -8,13 +9,13 @@ from dateutil.relativedelta import relativedelta
 
 class StravaboardComponent(ABC):
     @abstractmethod
-    def display() -> None:
+    def display(activities: pd.DataFrame) -> None:
         pass
 
 
 class Summary(StravaboardComponent):
     @staticmethod
-    def display(activities) -> None:
+    def display(activities: pd.DataFrame) -> None:
 
         st.write(
             "In total, you've run ",
@@ -46,7 +47,7 @@ class Summary(StravaboardComponent):
 
 
 class SpeedBreakdown(StravaboardComponent):
-    def display(self, activities):
+    def display(self, activities: pd.DataFrame) -> None:
 
         st.header("The speed breakdown")
 
@@ -102,5 +103,39 @@ class SpeedBreakdown(StravaboardComponent):
         )
 
         fig.update_traces(marker={"size": 10, "line": dict(width=1, color="white")})
+
+        st.plotly_chart(fig, use_container_width=False)
+
+
+class Mileage(StravaboardComponent):
+    @staticmethod
+    def display(activities: pd.DataFrame) -> None:
+
+        st.header("The mileage")
+
+        freq = st.radio("Breakdown mileage by:", ("week", "month"))
+        freq_grouper_key = {"month": "M", "week": "W"}
+        dis_by_freq = (
+            activities.groupby(pd.Grouper(key="date", freq=freq_grouper_key[freq]))
+            .agg({"distance_km": sum})
+            .reset_index()
+        )
+
+        dis_by_freq["tidy_date"] = dis_by_freq["date"].dt.strftime("%Y-%m-%d")
+
+        fig = px.bar(
+            dis_by_freq,
+            x="tidy_date",
+            y="distance_km",
+            labels={
+                "tidy_date": freq.title(),
+                "distance_km": "Total distance (km)",
+            },
+            width=800,
+            height=600,
+            title="Total mileage across each month",
+        )
+
+        fig.update_xaxes(tickangle=-45, showticklabels=True, type="category")
 
         st.plotly_chart(fig, use_container_width=False)
