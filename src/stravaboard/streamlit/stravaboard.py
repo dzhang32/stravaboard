@@ -1,6 +1,7 @@
 from typing import List
 
 import streamlit as st
+
 from stravaboard.api.strava_api import StravaAPI
 from stravaboard.streamlit.components import StravaboardComponent
 
@@ -22,4 +23,4 @@ class Stravaboard:
 
         for component in components:
 
-            component.display(self.activities)
+            component().display(self.activities)
