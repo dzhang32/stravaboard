@@ -62,14 +62,14 @@ class SpeedBreakdown(StravaboardComponent):
             activities.loc[
                 activities["distance_km"] < threshold,
             ],
-            title=f"Short runs (< {threshold}km)",
+            title=f"Runs shorter than {threshold}km",
         )
 
         self._plot_speed_breakdown(
             activities.loc[
                 activities["distance_km"] >= threshold,
             ],
-            title=f"Long runs (>= {threshold}km)",
+            title=f"Runs longer than {threshold}km",
         )
 
     @staticmethod
@@ -113,7 +113,7 @@ class Mileage(StravaboardComponent):
 
         st.header("The mileage")
 
-        freq = st.radio("Breakdown mileage by:", ("week", "month"))
+        freq = st.radio("Display mileage grouped by:", ("week", "month"))
         freq_grouper_key = {"month": "M", "week": "W"}
         dis_by_freq = (
             activities.groupby(pd.Grouper(key="date", freq=freq_grouper_key[freq]))
@@ -133,7 +133,6 @@ class Mileage(StravaboardComponent):
             },
             width=800,
             height=600,
-            title="Total mileage across each month",
         )
 
         fig.update_xaxes(tickangle=-45, showticklabels=True, type="category")
