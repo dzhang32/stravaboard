@@ -16,9 +16,9 @@ def load_env():
 @pytest.fixture
 def access_token():
     atm = AccessTokenManager(
-        client_id=os.environ.get("STRAVA_CLIENT_ID_DZ"),
-        client_secret=os.environ.get("STRAVA_CLIENT_SECRET_DZ"),
-        refresh_token=os.environ.get("STRAVA_REFRESH_TOKEN_DZ"),
+        client_id=os.environ.get("STRAVA_CLIENT_ID"),
+        client_secret=os.environ.get("STRAVA_CLIENT_SECRET"),
+        refresh_token=os.environ.get("STRAVA_REFRESH_TOKEN"),
     )
 
     return atm.access_token

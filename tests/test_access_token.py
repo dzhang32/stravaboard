@@ -15,9 +15,9 @@ def load_env():
 
 def test_AccessTokenRequestError_retrieves_access_token_correctly():
     atm = AccessTokenManager(
-        client_id=os.environ.get("STRAVA_CLIENT_ID_DZ"),
-        client_secret=os.environ.get("STRAVA_CLIENT_SECRET_DZ"),
-        refresh_token=os.environ.get("STRAVA_REFRESH_TOKEN_DZ"),
+        client_id=os.environ.get("STRAVA_CLIENT_ID"),
+        client_secret=os.environ.get("STRAVA_CLIENT_SECRET"),
+        refresh_token=os.environ.get("STRAVA_REFRESH_TOKEN"),
     )
 
     assert len(atm.access_token) == 40
