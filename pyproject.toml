@@ -1,6 +1,6 @@
 [project]
 name = "stravaboard"
-version = "1.0.0"
+version = "1.1.0"
 description = "A dashboard for flexibly displaying and tracking Strava runs."
 authors = [
     { name = "David Zhang" },
