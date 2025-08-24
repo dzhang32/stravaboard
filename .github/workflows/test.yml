@@ -10,13 +10,16 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      PYTHON_VERSION: "3.13"
+
     steps:
     - uses: actions/checkout@v4
 
-    - name: Set up Python 3.13
+    - name: Set up Python
       uses: actions/setup-python@v5
       with:
-        python-version: "3.13"
+        python-version: ${{ env.PYTHON_VERSION }}
 
     - name: Install dependencies
       run: |
@@ -25,6 +28,10 @@ jobs:
 
     - name: Run tests
       run: pytest --cov=stravaboard --cov-report=xml
+      env:
+        STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
+        STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
+        STRAVA_REFRESH_TOKEN: ${{ secrets.STRAVA_REFRESH_TOKEN }}
 
     - name: Upload coverage to codecov
       uses: codecov/codecov-action@v4
