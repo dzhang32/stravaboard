@@ -54,7 +54,7 @@ class AccessTokenManager:
             "f": "json",
         }
 
-        res = requests.post(self.AUTH_URL, data=payload, verify=False)
+        res = requests.post(self.AUTH_URL, data=payload)
 
         if res.status_code != 200:
             raise AccessTokenRequestError(
