@@ -1,6 +1,6 @@
 # stravaboard
 
-[![codecov](https://codecov.io/gh/USERNAME/stravaboard/branch/main/graph/badge.svg)](https://codecov.io/gh/USERNAME/stravaboard)
+[![codecov](https://codecov.io/gh/dzhang32/stravaboard/branch/main/graph/badge.svg)](https://codecov.io/gh/dzhang32/stravaboard)
 
 A dashboard for flexibly displaying and tracking Strava runs.
 
