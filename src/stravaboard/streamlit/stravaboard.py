@@ -30,4 +30,4 @@ class Stravaboard:
         st.title("Stravaboard 🏃‍♂️🏃‍♀️")
 
         for component in components:
-            component().display(self.activities)
+            component.display(self.activities)

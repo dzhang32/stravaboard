@@ -9,13 +9,12 @@ from dateutil.relativedelta import relativedelta
 
 class StravaboardComponent(ABC):
     @abstractmethod
-    def display(activities: pd.DataFrame) -> None:
+    def display(self, activities: pd.DataFrame) -> None:
         pass
 
 
 class Summary(StravaboardComponent):
-    @staticmethod
-    def display(activities: pd.DataFrame) -> None:
+    def display(self, activities: pd.DataFrame) -> None:
         st.write(
             "In total, you've run ",
             str(round(activities["distance_km"].sum(), 2)),
@@ -101,8 +100,7 @@ class SpeedBreakdown(StravaboardComponent):
 
 
 class Mileage(StravaboardComponent):
-    @staticmethod
-    def display(activities: pd.DataFrame) -> None:
+    def display(self, activities: pd.DataFrame) -> None:
         st.header("The mileage")
 
         freq = st.radio("Display mileage grouped by:", ("week", "month"))

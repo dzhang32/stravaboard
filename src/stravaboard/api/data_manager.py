@@ -6,7 +6,7 @@ import requests
 
 class DataManager(ABC):
     @abstractmethod
-    def get_data(self) -> None:
+    def get_data(self, access_token: str, n: int) -> None:
         pass
 
     @abstractmethod
