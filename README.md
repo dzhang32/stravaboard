@@ -1,5 +1,8 @@
 # stravaboard
 
+[![Tests](https://github.com/USERNAME/stravaboard/actions/workflows/test.yml/badge.svg)](https://github.com/USERNAME/stravaboard/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/USERNAME/stravaboard/branch/main/graph/badge.svg)](https://codecov.io/gh/USERNAME/stravaboard)
+
 A dashboard for flexibly displaying and tracking Strava runs.
 
 ## Usage
