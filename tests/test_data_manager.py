@@ -25,7 +25,6 @@ def access_token():
 
 
 def test_ActivitiesManager_retrieves_activities_correctly(access_token):
-
     am = ActivitiesManager()
 
     assert am.ACTIVITIES_URL == "https://www.strava.com/api/v3/athlete/activities"

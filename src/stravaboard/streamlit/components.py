@@ -16,7 +16,6 @@ class StravaboardComponent(ABC):
 class Summary(StravaboardComponent):
     @staticmethod
     def display(activities: pd.DataFrame) -> None:
-
         st.write(
             "In total, you've run ",
             str(round(activities["distance_km"].sum(), 2)),
@@ -48,7 +47,6 @@ class Summary(StravaboardComponent):
 
 class SpeedBreakdown(StravaboardComponent):
     def display(self, activities: pd.DataFrame) -> None:
-
         st.header("The speed breakdown")
 
         threshold = st.slider(
@@ -59,22 +57,17 @@ class SpeedBreakdown(StravaboardComponent):
         )
 
         self._plot_speed_breakdown(
-            activities.loc[
-                activities["distance_km"] < threshold,
-            ],
+            activities.loc[activities["distance_km"] < threshold,],
             title=f"Runs shorter than {threshold}km",
         )
 
         self._plot_speed_breakdown(
-            activities.loc[
-                activities["distance_km"] >= threshold,
-            ],
+            activities.loc[activities["distance_km"] >= threshold,],
             title=f"Runs longer than {threshold}km",
         )
 
     @staticmethod
     def _plot_speed_breakdown(activities, title):
-
         fig = px.scatter(
             activities,
             x="date",
@@ -110,7 +103,6 @@ class SpeedBreakdown(StravaboardComponent):
 class Mileage(StravaboardComponent):
     @staticmethod
     def display(activities: pd.DataFrame) -> None:
-
         st.header("The mileage")
 
         freq = st.radio("Display mileage grouped by:", ("week", "month"))

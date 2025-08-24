@@ -14,7 +14,6 @@ def load_env():
 
 
 def test_StravaAPI_retrieves_activities_correctly():
-
     strava_api = StravaAPI(
         client_id=os.environ.get("STRAVA_CLIENT_ID"),
         client_secret=os.environ.get("STRAVA_CLIENT_SECRET"),
