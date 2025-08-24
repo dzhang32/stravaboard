@@ -7,6 +7,10 @@ from stravaboard.api.strava_api import StravaAPI
 from stravaboard.exceptions import InvalidDataTypeError
 
 
+@pytest.mark.skipif(
+    os.environ.get("STRAVA_CLIENT_ID") == "",
+    reason="Strava credentials are not set (e.g. via secrets on GitHub Actions).",
+)
 def test_StravaAPI_retrieves_activities_correctly() -> None:
     strava_api = StravaAPI(
         client_id=os.environ.get("STRAVA_CLIENT_ID"),

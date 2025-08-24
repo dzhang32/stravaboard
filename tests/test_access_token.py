@@ -1,3 +1,4 @@
+import os
 from datetime import datetime
 
 import pytest
@@ -6,6 +7,10 @@ from stravaboard.api.access_token import AccessTokenManager
 from stravaboard.exceptions import AccessTokenRequestError
 
 
+@pytest.mark.skipif(
+    os.environ.get("STRAVA_CLIENT_ID") == "",
+    reason="Strava credentials are not set (e.g. via secrets on GitHub Actions).",
+)
 def test_AccessTokenRequestError_retrieves_access_token_correctly(
     access_token_manager: AccessTokenManager,
 ) -> None:

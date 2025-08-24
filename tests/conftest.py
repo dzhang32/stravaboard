@@ -16,6 +16,10 @@ def load_env() -> None:
     load_dotenv()
 
 
+@pytest.mark.skipif(
+    os.environ.get("STRAVA_CLIENT_ID") == "",
+    reason="Strava credentials are not set (e.g. via secrets on GitHub Actions).",
+)
 @pytest.fixture
 def access_token_manager() -> AccessTokenManager:
     """
