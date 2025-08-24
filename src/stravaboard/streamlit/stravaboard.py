@@ -1,5 +1,3 @@
-from typing import List
-
 import streamlit as st
 
 from stravaboard.api.strava_api import StravaAPI
@@ -18,7 +16,7 @@ class Stravaboard:
 
         self.activities = strava_api.get("activities")
 
-    def display(self, components: List[StravaboardComponent]) -> None:
+    def display(self, components: list[StravaboardComponent]) -> None:
         """Display the components of a Stravaboard.
 
         Parameters
@@ -30,4 +28,5 @@ class Stravaboard:
         st.title("Stravaboard 🏃‍♂️🏃‍♀️")
 
         for component in components:
-            component.display(self.activities)
+            component_instance = component()  # type: ignore
+            component_instance.display(self.activities)
