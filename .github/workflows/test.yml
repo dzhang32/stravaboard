@@ -27,7 +27,7 @@ jobs:
         pip install -e ".[dev]"
 
     - name: Run tests
-      run: pytest --cov=stravaboard --cov-report=xml
+      run: pytest --cov --cov-branch --cov-report=xml
       env:
         STRAVA_CLIENT_ID: ${{ secrets.STRAVA_CLIENT_ID }}
         STRAVA_CLIENT_SECRET: ${{ secrets.STRAVA_CLIENT_SECRET }}
@@ -36,4 +36,4 @@ jobs:
     - name: Upload coverage to codecov
       uses: codecov/codecov-action@v4
       with:
-        file: ./coverage.xml
+        token: ${{ secrets.CODECOV_TOKEN }}
