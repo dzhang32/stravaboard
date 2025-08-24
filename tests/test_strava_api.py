@@ -2,28 +2,27 @@ import os
 
 import pandas as pd
 import pytest
-from dotenv import load_dotenv
 
 from stravaboard.api.strava_api import StravaAPI
 from stravaboard.exceptions import InvalidDataTypeError
 
 
-@pytest.fixture(scope="session", autouse=True)
-def load_env():
-    load_dotenv()
-
-
-def test_StravaAPI_retrieves_activities_correctly():
-
+@pytest.mark.skipif(
+    os.environ.get("STRAVA_CLIENT_ID") == "",
+    reason="Strava credentials are not set (e.g. via secrets on GitHub Actions).",
+)
+def test_StravaAPI_retrieves_activities_correctly() -> None:
     strava_api = StravaAPI(
         client_id=os.environ.get("STRAVA_CLIENT_ID"),
         client_secret=os.environ.get("STRAVA_CLIENT_SECRET"),
         refresh_token=os.environ.get("STRAVA_REFRESH_TOKEN"),
     )
 
+    # Check that invalid data types raise an error.
     with pytest.raises(InvalidDataTypeError, match="data_type must be one of:"):
         strava_api.get("invalid_data_type")
 
+    # Check that the activities data is retrieved correctly.
     activities_df = strava_api.get("activities")
 
     assert isinstance(activities_df, pd.DataFrame)

@@ -6,32 +6,33 @@ from stravaboard.exceptions import InvalidDataTypeError
 
 
 class StravaAPI:
-    """Responsible for querying the Strava API."""
+    """
+    Responsible for querying the Strava API.
+    """
 
     DATA_TYPES = {"activities": ActivitiesManager()}
 
     def __init__(
         self,
-        client_id: str,
-        client_secret: str,
-        refresh_token: str,
-    ):
+        client_id: str | None,
+        client_secret: str | None,
+        refresh_token: str | None,
+    ) -> None:
         self.access_token_manager = AccessTokenManager(
-            client_id, client_secret, refresh_token
+            client_id,
+            client_secret,
+            refresh_token,
         )
 
     def get(self, data_type: str) -> pd.DataFrame:
-        """Download and tidy Strava data.
+        """
+        Download and tidy Strava data.
 
-        Parameters
-        ----------
-        data_type : str
-            the type of Strava data to download, must be "activities".
+        Args:
+            data_type: Type of Strava data to download.
 
-        Returns
-        -------
-        pd.DataFrame
-            contains tidy Strava data.
+        Returns:
+            pd.DataFrame: The tidied Strava data.
         """
         if data_type not in self.DATA_TYPES:
             available_types = ", ".join(self.DATA_TYPES.keys())
