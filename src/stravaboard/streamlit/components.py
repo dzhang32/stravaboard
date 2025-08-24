@@ -8,13 +8,32 @@ from dateutil.relativedelta import relativedelta
 
 
 class StravaboardComponent(ABC):
+    """
+    Interface for classes that display a streamlit component.
+    """
+
     @abstractmethod
     def display(self, activities: pd.DataFrame) -> None:
+        """
+        Display the streamlit component.
+        """
         pass
 
 
 class Summary(StravaboardComponent):
+    """
+    Display a summary of the activities.
+
+    Shows the total distance and time run across a user-defined time period.
+    """
+
     def display(self, activities: pd.DataFrame) -> None:
+        """
+        Display the summary of the activities.
+
+        Args:
+            activities: DataFrame containing the Strava activities data
+        """
         st.write(
             "In total, you've run ",
             str(round(activities["distance_km"].sum(), 2)),
@@ -45,7 +64,19 @@ class Summary(StravaboardComponent):
 
 
 class SpeedBreakdown(StravaboardComponent):
+    """
+    Display a breakdown of the speed of Strava activities.
+
+    Displays the speed of the activities over time as a scatter plot.
+    """
+
     def display(self, activities: pd.DataFrame) -> None:
+        """
+        Display the speed breakdown of the activities.
+
+        Args:
+            activities: DataFrame containing the Strava activities data.
+        """
         st.header("The speed breakdown")
 
         threshold = st.slider(
@@ -66,7 +97,14 @@ class SpeedBreakdown(StravaboardComponent):
         )
 
     @staticmethod
-    def _plot_speed_breakdown(activities, title):
+    def _plot_speed_breakdown(activities: pd.DataFrame, title: str) -> None:
+        """
+        Plot the speed breakdown of the activities using plotly.
+
+        Args:
+            activities: DataFrame containing the Strava activities data.
+            title: Title of the plot.
+        """
         fig = px.scatter(
             activities,
             x="date",
@@ -100,7 +138,20 @@ class SpeedBreakdown(StravaboardComponent):
 
 
 class Mileage(StravaboardComponent):
+    """
+    Display the mileage of Strava activities.
+
+    Displays the total mileage of the activities grouped by week or month as a bar
+    chart.
+    """
+
     def display(self, activities: pd.DataFrame) -> None:
+        """
+        Display the mileage of the activities.
+
+        Args:
+            activities: DataFrame containing the Strava activities data.
+        """
         st.header("The mileage")
 
         freq = st.radio("Display mileage grouped by:", ("week", "month"))

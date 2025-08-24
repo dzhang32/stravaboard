@@ -5,7 +5,9 @@ from stravaboard.streamlit.components import StravaboardComponent
 
 
 class Stravaboard:
-    """Responsible for creating a streamlit app displaying Strava data."""
+    """
+    Top-level class used to create a streamlit app displaying Strava data.
+    """
 
     def __init__(self, client_id: str, client_secret: str, refresh_token: str) -> None:
         strava_api = StravaAPI(
@@ -17,13 +19,11 @@ class Stravaboard:
         self.activities = strava_api.get("activities")
 
     def display(self, components: list[StravaboardComponent]) -> None:
-        """Display the components of a Stravaboard.
+        """
+        Display the desired streamlit components for Stravaboard.
 
-        Parameters
-        ----------
-        components : List[StravaboardComponent]
-            objects have a display() method that displays streamlit
-            component(s).
+        Args:
+            components: List of streamlit components to display.
         """
         st.title("Stravaboard 🏃‍♂️🏃‍♀️")
 
