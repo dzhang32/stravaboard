@@ -8,3 +8,7 @@ class AccessTokenRequestError(BaseStravaboardError):
 
 class InvalidDataTypeError(BaseStravaboardError):
     pass
+
+
+class MissingCredentialsError(BaseStravaboardError):
+    pass

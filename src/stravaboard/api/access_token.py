@@ -2,7 +2,7 @@ from datetime import datetime
 
 import requests
 
-from stravaboard.exceptions import AccessTokenRequestError
+from stravaboard.exceptions import AccessTokenRequestError, MissingCredentialsError
 
 
 class AccessTokenManager:
@@ -12,11 +12,19 @@ class AccessTokenManager:
 
     AUTH_URL = "https://www.strava.com/oauth/token"
 
-    def __init__(self, client_id: str, client_secret: str, refresh_token: str) -> None:
+    def __init__(
+        self,
+        client_id: str | None,
+        client_secret: str | None,
+        refresh_token: str | None,
+    ) -> None:
         self.request_access_token(client_id, client_secret, refresh_token)
 
     def request_access_token(
-        self, client_id: str, client_secret: str, refresh_token: str
+        self,
+        client_id: str | None,
+        client_secret: str | None,
+        refresh_token: str | None,
     ) -> None:
         """
         Request a Strava access token.
@@ -33,6 +41,11 @@ class AccessTokenManager:
         Raises:
             AccessTokenRequestError: Raised if the request fails (status code != 200).
         """
+        if client_id is None or client_secret is None or refresh_token is None:
+            raise MissingCredentialsError(
+                "Client ID, client secret, and refresh token must be provided."
+            )
+
         payload = {
             "client_id": client_id,
             "client_secret": client_secret,

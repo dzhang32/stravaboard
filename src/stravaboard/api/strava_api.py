@@ -14,12 +14,14 @@ class StravaAPI:
 
     def __init__(
         self,
-        client_id: str,
-        client_secret: str,
-        refresh_token: str,
-    ):
+        client_id: str | None,
+        client_secret: str | None,
+        refresh_token: str | None,
+    ) -> None:
         self.access_token_manager = AccessTokenManager(
-            client_id, client_secret, refresh_token
+            client_id,
+            client_secret,
+            refresh_token,
         )
 
     def get(self, data_type: str) -> pd.DataFrame:
