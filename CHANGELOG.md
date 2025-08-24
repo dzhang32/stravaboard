@@ -1,6 +1,6 @@
 # Changelog
 
-## 1.1.0
+## 1.1.0
 
 - Update to use modern python packaging approach (`uv`).
 - Use python >= 3.13.
